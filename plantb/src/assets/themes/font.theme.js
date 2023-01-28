@@ -5,7 +5,7 @@ import "@fontsource/raleway";
 const theme = extendTheme({
     fonts: {
         heading: "raleway",
-        body: "biorhyme",
+        body: "raleway",
     },
     styles: {
         global: () => ({

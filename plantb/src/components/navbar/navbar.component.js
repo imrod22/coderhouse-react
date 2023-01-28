@@ -11,17 +11,16 @@ const NavBar = () => {
         justify={{ base: "flex-start" }}
         wrap="wrap"
         flex={{ base: 1, md: 'auto' }}
-        ml={{ base: -2 }}
-        border={"1px solid green"}   
-        boxShadow='dark-lg'
-        backgroundColor="#b7f2a7" 
+        ml={{ base: -2 }} 
+        boxShadow='lg'
+        backgroundColor="#bfd1ba" 
       >
         <Link href='/'>
         <Icon as={Logo} cursor={'pointer'} w={150} h={100} paddingRight={0.5} transition="all .25s ease" _hover={{ transform: 'scale(1.33)' }}/>
         </Link>        
         <MenuLinks/> 
         <Spacer /> 
-        <CartWidget counter="1"/>   
+        <CartWidget counter="0"/>   
       </Flex>     
     );
   };
