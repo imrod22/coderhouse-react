@@ -1,7 +1,7 @@
 import { Box, Circle } from "@chakra-ui/react";
 import * as IconFeather from 'react-feather';
 
-const ShopCart = (props) => {
+const CartWidget = (props) => {
     return (
         <Box w={100} paddingLeft={0.5} cursor="pointer">        
            <IconFeather.ShoppingCart></IconFeather.ShoppingCart>
@@ -10,4 +10,4 @@ const ShopCart = (props) => {
     );
 };
 
-export default ShopCart;
+export default CartWidget;

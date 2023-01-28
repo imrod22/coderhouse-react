@@ -15,8 +15,8 @@ const MenuLinks = () => {
         >
           <MenuItem to="/indoor" section="Indoor"/>
           <MenuItem to="/outdoor" section="Outdoor"/>
-          <MenuItem to="/fruit-trees" section="Frutales"/>
-          <MenuItem to="/about" section="About"/>
+          <MenuItem to="/fruit-trees" section="Fruit-Trees"/>
+          <MenuItem to="/about" section="Us"/>
         </Stack>
       </Box>);     
 };
