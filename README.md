@@ -1,9 +1,4 @@
-# coderhouse-react-entrega-1
-
 # coderhouse-pre-entrega-1
-
-
-
 
 ## Tech Stack
 
