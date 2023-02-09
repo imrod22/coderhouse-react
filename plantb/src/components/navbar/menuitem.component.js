@@ -1,15 +1,16 @@
 import React from "react";
-import { Link, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
 
-const MenuItem = ({ section, to="/"}) => {
+const MenuItem = ({ section, pagepath="/"}) => {
+
     return (
-      <Link 
-      _hover={{fontWeight: 1000}}
-        href={to}>
-        <Text display="block">
+      <NavLink      
+        to={pagepath}>
+        <Text _hover={{fontWeight: 1000}} display="block">
           {section}
         </Text>
-      </Link>
+      </NavLink>
     );
   };
 

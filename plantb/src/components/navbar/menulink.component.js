@@ -13,10 +13,10 @@ const MenuLinks = () => {
           direction={["column", "row", "row", "row"]}
           pt={[4, 4, 0, 0]}
         >
-          <MenuItem to="/indoor" section="Indoor"/>
-          <MenuItem to="/outdoor" section="Outdoor"/>
-          <MenuItem to="/fruit-trees" section="Fruit-Trees"/>
-          <MenuItem to="/about" section="Us"/>
+          <MenuItem pagepath="/indoor" section="Indoor"/>
+          <MenuItem pagepath="/outdoor" section="Outdoor"/>
+          <MenuItem pagepath="/fruit-trees" section="Fruit-Trees"/>
+          <MenuItem pagepath="/about" section="Us"/>
         </Stack>
       </Box>);     
 };
