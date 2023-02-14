@@ -13,9 +13,9 @@ const MenuLinks = () => {
           direction={["column", "row", "row", "row"]}
           pt={[4, 4, 0, 0]}
         >
-          <MenuItem pagepath="/indoor" section="Indoor"/>
-          <MenuItem pagepath="/outdoor" section="Outdoor"/>
-          <MenuItem pagepath="/fruit-trees" section="Fruit-Trees"/>
+          <MenuItem pagepath="/plants/category/indoor" section="Indoor"/>
+          <MenuItem pagepath="/plants/category/outdoor" section="Outdoor"/>
+          <MenuItem pagepath="/plants/category/fruittree" section="Fruit-Trees"/>
           <MenuItem pagepath="/about" section="Us"/>
         </Stack>
       </Box>);     

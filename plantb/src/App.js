@@ -8,10 +8,9 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import FruitTree from './pages/fruit-tree/fuit-tree.page';
 import AboutUs from './pages/aboutus/aboutus';
-import Outdoor from './pages/outdoor/outdoor';
-import Indoor from './pages/indoor/indoor';
+import SmallWithLogoLeft from './components/footer/footer.component';
+import { ItemListContainer } from './components/item/itemlistcontainer.component';
 
 function App() {
   return (
@@ -21,15 +20,14 @@ function App() {
         <NavBar/>
         <Routes>
             <Route path="/" element={<Greeting greeting="Welcome to Plant-B grow shop online."/>} />
-            <Route path="/indoor" element={<Indoor/>} />
-            <Route path="/outdoor" element={<Outdoor/>} />
-            <Route path="/fruit-trees" element={<FruitTree/>} />
+            <Route path="/plants" element={<ItemListContainer/>} />
+            <Route path="/plants/category/:category" element={<ItemListContainer/>} />
             <Route path="/about" element={<AboutUs/>} />
         </Routes>             
         
       </div>
       </Router>
-      
+      <SmallWithLogoLeft/>
     </ChakraProvider>    
   );
 }

@@ -12,6 +12,10 @@ const theme = extendTheme({
           body: {
             color: 'default',
             bg: '#fcf5d9',
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: '100vh',
+            flexGrow: 1
           },
         }),
       },
