@@ -1,6 +1,6 @@
 import { Flex, Heading } from '@chakra-ui/react';
 
-const ItemListContainer = (props) => {
+const Greeting = (props) => {
 return(
     
     <Flex      
@@ -25,4 +25,4 @@ return(
 )
 };
 
-export default ItemListContainer;
+export default Greeting;
