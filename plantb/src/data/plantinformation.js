@@ -19,6 +19,7 @@ export const getPlantsByCategory = (category) => {
 }
 
 export const getPlantDetail = (id) => {
+
     return new Promise((resolve) => {
         setTimeout(() => {
             const plant = plants.find(p => p.id === id)

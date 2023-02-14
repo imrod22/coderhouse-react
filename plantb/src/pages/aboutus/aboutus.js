@@ -5,7 +5,7 @@ import {
 
 const AboutUs = () => {
     return (
-        <Container>
+        <Container paddingTop="5%">
         <Box className='m-5' as="h2"
           size="md"
           color="primary.800"

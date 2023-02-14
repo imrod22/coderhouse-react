@@ -11,7 +11,7 @@ export const ItemList = ({plants = []}) => {
         justifyContent= 'center'
          >
             {
-                plants.length > 0 ? plants.map((plant) => <Item key={plant.id} plant={plant}  />) : <h3> No se encuentran productos</h3> 
+                plants.length > 0 ? plants.map((plant) => <Item key={plant.id} plant={plant}  />) : <h3> Not found</h3> 
             }
         </Box>
     )

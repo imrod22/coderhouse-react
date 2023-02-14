@@ -11,6 +11,7 @@ import {
 import AboutUs from './pages/aboutus/aboutus';
 import SmallWithLogoLeft from './components/footer/footer.component';
 import { ItemListContainer } from './components/item/itemlistcontainer.component';
+import { ItemDetailContainer } from './components/item/itemdetailcontainer.component';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/" element={<Greeting greeting="Welcome to Plant-B grow shop online."/>} />
             <Route path="/plants" element={<ItemListContainer/>} />
             <Route path="/plants/category/:category" element={<ItemListContainer/>} />
+            <Route path="/plants/detail/:id" element={<ItemDetailContainer/>} />
             <Route path="/about" element={<AboutUs/>} />
         </Routes>             
         
