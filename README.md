@@ -10,7 +10,7 @@
 Clone the project
 
 ```bash
-  git clone https://github.com/imrod22/coderhouse-react-entrega-1.git
+  git clone https://github.com/imrod22/coderhouse-react-plant-b-project.git
 ```
 
 Go to the project directory
