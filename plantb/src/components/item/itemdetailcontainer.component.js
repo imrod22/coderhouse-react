@@ -22,7 +22,7 @@ export const ItemDetailContainer = () => {
     return (
         <>
         {
-            plant ? <ItemDetail plant={plant} /> : 
+            plant ? <ItemDetail id={plant.id} plant={plant} /> : 
             <Flex   display="flex"
                     justifyContent="center"
                     alignItems="center"
