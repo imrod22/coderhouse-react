@@ -1,5 +1,15 @@
-import { Box, Image, Badge, Text, Stack, 
-     Button, Flex, Spacer } 
+import { 
+       Badge, 
+      AspectRatio,
+      Box,
+      Button,
+      HStack,
+      Image,
+      Skeleton,
+      Stack,
+      Text,
+      useColorModeValue, 
+    } 
     from "@chakra-ui/react";
 import { useNavigate } from 'react-router-dom';
 
@@ -27,38 +37,80 @@ export const Item = ({ plant }) => {
     }
 
         return (
-        <Box w="300px" rounded="20px" m={10} border={"1px"} 
-        borderColor={"grey"}
-        overflow="hidden" mt={10}>
-     <Image src={require(`../../assets/images/${image}`)}
-            alt="Card Image" boxSize="300px">
-     </Image>
-     <Box p={5}>
-     <Stack direction='row'>
-              {stylingPlantType(type)}
+<Box w="300px" m={10} border="1px" borderRadius={"md"} padding="1%">
+<Stack spacing={{ base: '4', md: '5' }}>
+      <Box position="relative">
+        <AspectRatio ratio={4 / 3}>
+          <Image
+            src={require(`../../assets/images/${image}`)}
+            alt={name}
+            draggable="false"
+            fallback={<Skeleton />}
+            borderRadius={{ base: 'md', md: 'xl' }}
+          />
+        </AspectRatio>
+      </Box>
+      <Stack>
+      <HStack>
+        <Text fontSize="sm" color={useColorModeValue('gray.600', 'gray.400')}>
+        {stylingPlantType(type)}
+          </Text>
+        </HStack>
+        <Stack spacing="1">
+          <Text fontWeight="medium" color={useColorModeValue('gray.700', 'gray.400')}>
+            {name}
+          </Text>
+        </Stack>
+        
       </Stack>
-       <Stack align="center">
-       <Text
-                 fontWeight="bold"
-                 textTransform="uppercase"
-                 fontSize="lg"
-                 letterSpacing="wide"
-                 color="teal.600"
-               >
-                 {name}
-               </Text>
-         <Text fontWeight="light">
-           
-         </Text>
-       </Stack>
-       <Flex>  
-         <Spacer />
-         <Button variant="solid" 
+      <Stack  align="center" 
+              display= "flex"
+              justifyContent= "flex-end"
+              alignItems= "inherit">
+      <Button variant="solid" 
            colorScheme="green" size="sm" onClick={viewDetailPlan}>
-             Details
-         </Button>
-       </Flex>
-     </Box>
-   </Box>          
+              Details
+          </Button>
+      </Stack>
+    </Stack>
+      
+
+
+</Box>
+    
+
+  //     <Box w="300px" rounded="20px" m={10} border={"1px"} 
+  //        borderColor={"grey"}
+  //       overflow="hidden" mt={10}>
+  //    <Image src={require(`../../assets/images/${image}`)}
+  //           alt="Card Image" boxSize="300px">
+  //    </Image>
+  //    <Box p={5}>
+  //    <Stack direction='row'>
+  //             {stylingPlantType(type)}
+  //     </Stack>
+  //      <Stack align="center">
+  //      <Text
+  //                fontWeight="bold"
+  //                textTransform="uppercase"
+  //                fontSize="lg"
+  //                letterSpacing="wide"
+  //                color="teal.600"
+  //              >
+  //                {name}
+  //              </Text>
+  //        <Text fontWeight="light">
+           
+  //        </Text>
+  //      </Stack>
+  //      <Flex>  
+  //        <Spacer />
+  //        <Button variant="solid" 
+  //          colorScheme="green" size="sm" onClick={viewDetailPlan}>
+  //            Details
+  //        </Button>
+  //      </Flex>
+  //    </Box>
+  // </Box>
     )
 }

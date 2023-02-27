@@ -22,7 +22,7 @@ const NavBar = () => {
         </RouteLink>              
         <MenuLinks/> 
         <Spacer /> 
-        <CartWidget counter="0"/>   
+        <CartWidget/>   
       </Flex>     
     );
   };

@@ -49,7 +49,7 @@ export const ItemListContainer = () => {
           borderColor={"grey"}
           p={"2rem"}
         >
-          category - {categoryplant}
+          {categoryplant}
         </Heading>    
     </Flex>
     <Divider />

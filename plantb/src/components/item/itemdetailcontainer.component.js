@@ -17,12 +17,12 @@ export const ItemDetailContainer = () => {
             .then((result) => {
                 setPlant(result)
             })
-    }, [id]);
+    }, []);
 
     return (
         <>
         {
-            plant ? <ItemDetail plant={plant} /> : 
+            plant ? <ItemDetail key={plant.id} plant={plant} /> : 
             <Flex   display="flex"
                     justifyContent="center"
                     alignItems="center"

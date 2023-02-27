@@ -9,27 +9,29 @@ import {
   Route
 } from "react-router-dom";
 import AboutUs from './pages/aboutus/aboutus';
-import SmallWithLogoLeft from './components/footer/footer.component';
+import Footer from './components/footer/footer.component';
 import { ItemListContainer } from './components/item/itemlistcontainer.component';
 import { ItemDetailContainer } from './components/item/itemdetailcontainer.component';
+import { CartProvider } from './context/cart.context';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
+      <CartProvider>
       <Router>
-      <div className="App">
         <NavBar/>
         <Routes>
-            <Route path="/" element={<Greeting greeting="Welcome to Plant-B grow shop online."/>} />
+            <Route path="/" element={<Greeting greeting="Plants have many health benefits as they purify the air, connect you with nature and boost your creativity. In our site you will find a wide variety of Indoor and Outdoor Plants and fruit trees."/>} />
             <Route path="/plants" element={<ItemListContainer/>} />
             <Route path="/plants/category/:category" element={<ItemListContainer/>} />
             <Route path="/plants/detail/:id" element={<ItemDetailContainer/>} />
             <Route path="/about" element={<AboutUs/>} />
-        </Routes>             
+        </Routes>   
         
-      </div>
       </Router>
-      <SmallWithLogoLeft/>
+      <Footer/>
+      </CartProvider>
+      
     </ChakraProvider>    
   );
 }
