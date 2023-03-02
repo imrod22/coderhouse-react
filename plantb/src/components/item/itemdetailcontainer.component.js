@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { getPlantDetail } from "../../data/plantinformation";
 import { ItemDetail } from "./itemdetail.component";
+import { useFirebase } from "../../context/firebase.context";
+import { doc, getDoc } from 'firebase/firestore/lite';
+
 import {
     Flex,
     Spinner
@@ -9,15 +11,17 @@ import {
 
 export const ItemDetailContainer = () => {
     const [plant, setPlant] = useState(null);
-
+    const firebase = useFirebase();
     const { id } = useParams();
     
     useEffect(() => {
-        getPlantDetail(id)
-            .then((result) => {
-                setPlant(result)
-            })
-    }, []);
+        const selectedPlant = doc(firebase, 'plants', id);
+
+        getDoc(selectedPlant).then((p) => {
+            setPlant({...p.data(), id: p.id})
+        })
+
+    },[firebase, id]);
 
     return (
         <>

@@ -6,12 +6,12 @@ import {
   Image,
   Flex,
   VStack,
-  Button,
   Heading,
   SimpleGrid,
   StackDivider,
   useColorModeValue,
 } from '@chakra-ui/react';
+import CartAddItem from '../cart/cartadditem.component';
 
 export const ItemDetail = ({ plant }) => {
     const { name, image, description, family, price } = plant;
@@ -46,7 +46,7 @@ export const ItemDetail = ({ plant }) => {
                     color={useColorModeValue('gray.900', 'gray.400')}
                     fontWeight={300}
                     fontSize={'2xl'}>
-                   {price} USD
+                    {price}
                   </Text>
                 </Box>
       
@@ -70,26 +70,12 @@ export const ItemDetail = ({ plant }) => {
                     </Text>
                   </VStack>
                 </Stack>
-      
-                <Button
-                  rounded={'none'}
-                  w={'full'}
-                  mt={8}
-                  size={'lg'}
-                  py={'7'}
-                  bg={useColorModeValue('gray.900', 'gray.50')}
-                  color={useColorModeValue('white', 'gray.900')}
-                  textTransform={'uppercase'}
-                  _hover={{
-                    transform: 'translateY(2px)',
-                    boxShadow: 'lg',
-                  }}>
-                  Add to cart
-                </Button>
-      
-                <Stack direction="row" alignItems="center" justifyContent={'center'}>
+                <CartAddItem></CartAddItem>
+
+                  <Stack direction="row" alignItems="center" justifyContent={'center'}>
                   <Text>2-3 business days delivery</Text>
-                </Stack>
+                </Stack>                
+                
               </Stack>
             </SimpleGrid>
           </Container>

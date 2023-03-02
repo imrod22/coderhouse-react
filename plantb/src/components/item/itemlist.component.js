@@ -12,9 +12,6 @@ export const ItemList = ({plants = []}) => {
             {
                 plants.length > 0 ? plants.map((plant) => <Item key={plant.id} plant={plant}  />) : <h3> Not found</h3> 
             }
-
         </SimpleGrid>
-            
-        // </Box>
     )
 }

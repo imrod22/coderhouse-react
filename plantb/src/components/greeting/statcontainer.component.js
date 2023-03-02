@@ -5,7 +5,6 @@ import {
   } from '@chakra-ui/react';
 
   import StatCard from "../../components/greeting/statcard.component";
-
   import * as IconFeather from 'react-feather';
 
 const StatContainer = () => {
@@ -16,7 +15,7 @@ const StatContainer = () => {
   fontSize={'2xl'}
   py={10}
   fontWeight={'bold'}>
-  Our shop continue expanding.
+  Our shop growing too.
 </chakra.h1>
 <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }} mb="30%">
   <StatCard

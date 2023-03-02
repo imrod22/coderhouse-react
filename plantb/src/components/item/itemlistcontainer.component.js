@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { getPlantsByCategory, getAllPlants } from "../../data/plantinformation";
 import { ItemList } from "../item/itemlist.component";
 import {
     Flex,
@@ -8,28 +7,62 @@ import {
     Divider
   } from '@chakra-ui/react'
 import { useParams } from "react-router-dom";
+import { useFirebase } from "../../context/firebase.context";
+import { collection, getDocs, query, where } from "firebase/firestore/lite";
 
 export const ItemListContainer = () => {
+    const firebase = useFirebase();
     const [plants, setPlants] = useState([]);
     const [categoryplant, setCategoryPlant] = useState("");
     const {category} = useParams();
 
     useEffect(() => {
-        if(category){
-            setCategoryPlant(category)
-            getPlantsByCategory(category)
-            .then((res) => {          
-                setPlants(res);
-            })
-        }
+        
+            const currentPlants = collection(firebase, 'plants');           
+
+            const getPlants = async() => {
+                const q = query(
+                    currentPlants
+                );
+
+                const querySnapshot = await getDocs(q);
+
+                const docs = [];
+                querySnapshot.forEach((doc) => {
+                docs.push({ ...doc.data(), id: doc.id });
+              });   
+              setPlants(docs);
+            };
+
+            const getPlantsByType = async(category) => {
+
+                const q = query(
+                    currentPlants,
+                    where("category", "==", category)
+                );
+
+                const docs = [];
+
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    docs.push({ ...doc.data(), id: doc.id });
+                  });   
+                  setPlants(docs);
+            };
+
+            if(category){
+                setCategoryPlant(category);
+                getPlantsByType(category);
+            }
+        
         else{
-            setCategoryPlant("All Categories")
-            getAllPlants()
-                .then((res) => {
-                    setPlants(res)
-                })
+            setCategoryPlant("All Categories");
+            getPlants();
         }
-    }, [category])
+
+        
+
+    }, [firebase, category])
 
 
     return (

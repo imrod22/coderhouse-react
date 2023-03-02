@@ -13,10 +13,14 @@ import Footer from './components/footer/footer.component';
 import { ItemListContainer } from './components/item/itemlistcontainer.component';
 import { ItemDetailContainer } from './components/item/itemdetailcontainer.component';
 import { CartProvider } from './context/cart.context';
+import { db } from './firebase/firebase.configuration';
+import { FirebaseContext } from './context/firebase.context';
+import Cart from './components/cart/cart.component';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
+      <FirebaseContext.Provider value={db}>
       <CartProvider>
       <Router>
         <NavBar/>
@@ -26,12 +30,13 @@ function App() {
             <Route path="/plants/category/:category" element={<ItemListContainer/>} />
             <Route path="/plants/detail/:id" element={<ItemDetailContainer/>} />
             <Route path="/about" element={<AboutUs/>} />
+            <Route path="/cart" element={ <Cart/>} />
         </Routes>   
         
       </Router>
       <Footer/>
       </CartProvider>
-      
+      </FirebaseContext.Provider>   
     </ChakraProvider>    
   );
 }
