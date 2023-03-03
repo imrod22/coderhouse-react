@@ -11,7 +11,7 @@ const  CounterPlants = ({plant})  => {
 
     return (
       <Flex>
-        <NumberInput maxW='100px' mr='2rem' defaultValue={plant.quantity} max={plant.storage} min={0} >
+        <NumberInput maxW='100px' mr='2rem' defaultValue={plant.quantity} max={plant.storage} min={1} >
           <NumberInputField />
           <NumberInputStepper>
             <NumberIncrementStepper />

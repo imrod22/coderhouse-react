@@ -23,16 +23,20 @@ const CartAddItem = ({disabled = false, plant}) => {
           storage
       }
 
-      if(!existsProduct(plantSelected))
+      if(plantSelected.storage === 0)
       {
-        addPlantToCart(plantSelected);
-        toast.success('Add Plant to Cart!');
+        toast.error('Plant Not Available')
       }
-      else{
-        toast('Already Added')
+      else {
+        if(!existsProduct(plantSelected))
+        {
+          addPlantToCart(plantSelected);
+          toast.success('Add Plant to Cart!');
+        }
+        else{
+          toast('Already Added')
+        }
       }
-      
-      
     }
     
     return (
@@ -54,7 +58,6 @@ const CartAddItem = ({disabled = false, plant}) => {
                   onClick={handlerAddPlant} disabled={disabled}>
                   Add to cart
                 </Button>
-
   <Toaster/>
      </Flex>
     )

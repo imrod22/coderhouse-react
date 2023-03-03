@@ -1,13 +1,16 @@
 import {
     Box,
     Flex,
+    Heading,
     Stack,
     Button    
     } from '@chakra-ui/react';
 
 import * as IconFeather from 'react-feather';
 import CartItem from './cartitem.component';
+import CartSummary from './cartsummary.component';
 import { useCartContext } from "../../context/cart.context";
+
 
 const Cart = () => {
 
@@ -15,7 +18,7 @@ const Cart = () => {
     emptyCart();
   }
 
-    const { cart, emptyCart } = useCartContext();
+  const { cart, emptyCart, totalPlants } = useCartContext();
 
  return (
     
@@ -31,30 +34,35 @@ const Cart = () => {
       spacing={{ base: '8', md: '16' }}
     >
       <Stack spacing={{ base: '8', md: '10' }} flex="2">
-
+      <Heading fontSize="2xl" fontWeight="extrabold">
+          My Cart ({totalPlants()} Plant/s)
+        </Heading>
+        <Button
+        placeholder='Clear Cart'
+        _focus={{ boxShadow: 'none' }}
+        w="fit-content"
+        onClick={handlerEmptyCart} >
+         <IconFeather.Trash/> Empty Cart 
+      </Button>
         <Stack spacing="6">
           {cart.map((item) => (
             <CartItem key={item.id} {...item} />
           ))}
         </Stack>
-      </Stack>      
+      </Stack>    
 
-      <Flex direction="row" display="flex" alignContent="flex-end" justifyContent="flex-end" padding="1%" align="center" flex="1">
-      <Button
+      <Flex direction="column" align="center" flex="1">
+        <CartSummary/>
+        <Button mt={"5%"}
         placeholder='Return'
         _focus={{ boxShadow: 'none' }}
         w="fit-content"
         onClick={handlerEmptyCart} >
-        <IconFeather.ArrowLeft/>
+         <IconFeather.ArrowLeft/> Return to Items
       </Button>
-      <Button
-        placeholder='Clear Cart'
-        _focus={{ boxShadow: 'none' }}
-        w="fit-content"
-        onClick={handlerEmptyCart} >
-        <IconFeather.Trash/>
-      </Button>
-      </Flex>      
+    
+      </Flex>
+
       </Stack>      
       </Box>
  )

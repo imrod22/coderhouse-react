@@ -63,7 +63,7 @@ import {
         color: "white",
       }}
     >
-      Plant B - Copyright &copy; {new Date().getFullYear()}
+      Plant B Grow Shop - copyright &copy; {new Date().getFullYear()}
     </chakra.p>
 
     <Flex mx="-2" >

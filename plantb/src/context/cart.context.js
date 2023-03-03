@@ -23,8 +23,9 @@ export const CartProvider = ({children}) => {
     }
 
     const removePlantInCart = (plant) => {
+
         setCart(cart.map(p => {
-            if(p.id === plant.id && p.name === plant.name && p.type === plant.type){
+            if(p.id === plant.id && p.name === plant.name){
                 p.quantity--;
             }
             return p;           
@@ -32,7 +33,7 @@ export const CartProvider = ({children}) => {
     }
 
     const removeAllPlantInCart = (plant) => {
-        const currentShop = cart.filter(p => p.name === plant.name && p.type === plant.type);
+        const currentShop = cart.filter(p => !(p.id === plant.id && p.name === plant.name));
         setCart(currentShop);
     }
 
@@ -45,7 +46,9 @@ export const CartProvider = ({children}) => {
     }
 
     const totalExpend = () => {
-        return cart.reduce((tot, current) => tot + (current.price * current.quantity), 0)
+        console.log(cart.reduce((tot, current) => tot + (current.price * current.quantity), 0));
+
+        return cart.reduce((tot, current) => tot + (current.price * current.quantity), 0);
     }
 
     const emptyCart = () => {

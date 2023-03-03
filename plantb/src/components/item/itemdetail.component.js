@@ -70,7 +70,7 @@ export const ItemDetail = ({ plant }) => {
                     </Text>
                   </VStack>
                 </Stack>
-                <CartAddItem></CartAddItem>
+                <CartAddItem plant={plant}></CartAddItem>
 
                   <Stack direction="row" alignItems="center" justifyContent={'center'}>
                   <Text>2-3 business days delivery</Text>
