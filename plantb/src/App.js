@@ -6,7 +6,8 @@ import Greeting from './components/greeting/greeting.component';
 import {
   BrowserRouter as Router,
   Routes,
-  Route
+  Route,
+  Navigate
 } from "react-router-dom";
 import AboutUs from './pages/aboutus/aboutus';
 import Footer from './components/footer/footer.component';
@@ -16,12 +17,15 @@ import { CartProvider } from './context/cart.context';
 import { db } from './firebase/firebase.configuration';
 import { FirebaseContext } from './context/firebase.context';
 import Cart from './components/cart/cart.component';
+import NonFound from './pages/not-found/notfound';
+import { SessionProvider } from './context/session.context';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <FirebaseContext.Provider value={db}>
+      <FirebaseContext.Provider value={db}>      
       <CartProvider>
+      <SessionProvider>
       <Router>
         <NavBar/>
         <Routes>
@@ -31,11 +35,14 @@ function App() {
             <Route path="/plants/detail/:id" element={<ItemDetailContainer/>} />
             <Route path="/about" element={<AboutUs/>} />
             <Route path="/cart" element={ <Cart/>} />
-        </Routes>   
-        
+            <Route path="/error" element={<NonFound/>} />
+            <Route path='*' element={ <Navigate to="/error"/> } />
+        </Routes>        
       </Router>
       <Footer/>
+      </SessionProvider>
       </CartProvider>
+      
       </FirebaseContext.Provider>   
     </ChakraProvider>    
   );
