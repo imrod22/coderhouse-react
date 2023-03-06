@@ -4,7 +4,7 @@ import {
     useColorModeValue
   } from '@chakra-ui/react';
 
-  import { useCartContext } from "../../context/cart.context";
+  import { useCartContext } from '../../context/cart.context';
   import toast, { Toaster } from 'react-hot-toast';
 
 const CartAddItem = ({disabled = false, plant}) => {

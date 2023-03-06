@@ -17,12 +17,7 @@ const AboutUs = () => {
           Together we can make a difference and help reduce CO2 levels in our cities, helping to avoid climate change that can destroy our planet. How can you contribute? Whether your home has just one plant or a jungle: more green will help in the fight to reduce the amounts of toxic gases.
         </Text>
         <StatContainer></StatContainer>
-
-      </Stack>
-
-
-     
-    
+      </Stack>   
     )}
 
 export default AboutUs;

@@ -9,14 +9,19 @@ import {
 import * as IconFeather from 'react-feather';
 import CartItem from './cartitem.component';
 import CartSummary from './cartsummary.component';
-import { useCartContext } from "../../context/cart.context";
-
+import { useCartContext } from '../../context/cart.context';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
+  const navigate = useNavigate();
 
   const handlerEmptyCart = () => {
     emptyCart();
-  }
+  };
+
+  const handlerReturnToPlants = () => {
+    navigate('/plants')
+  };
 
   const { cart, emptyCart, totalPlants } = useCartContext();
 
@@ -57,8 +62,8 @@ const Cart = () => {
         placeholder='Return'
         _focus={{ boxShadow: 'none' }}
         w="fit-content"
-        onClick={handlerEmptyCart} >
-         <IconFeather.ArrowLeft/> Return to Items
+        onClick={handlerReturnToPlants} >
+         <IconFeather.ArrowLeft/> Return to Catalog
       </Button>
     
       </Flex>

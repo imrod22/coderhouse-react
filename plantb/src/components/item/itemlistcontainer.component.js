@@ -13,8 +13,8 @@ import { collection, getDocs, query, where } from "firebase/firestore/lite";
 export const ItemListContainer = () => {
     const firebase = useFirebase();
     const [plants, setPlants] = useState([]);
-    const [categoryplant, setCategoryPlant] = useState("");
-    const {category} = useParams();
+    const [ categoryplant, setCategoryPlant ] = useState("");
+    const { category } = useParams();
 
     useEffect(() => {
         
@@ -29,8 +29,9 @@ export const ItemListContainer = () => {
 
                 const docs = [];
                 querySnapshot.forEach((doc) => {
-                docs.push({ ...doc.data(), id: doc.id });
-              });   
+                docs.push({ ...doc.data(), id: doc.id, quantity: 0 });
+              });
+
               setPlants(docs);
             };
 
@@ -58,9 +59,7 @@ export const ItemListContainer = () => {
         else{
             setCategoryPlant("All Categories");
             getPlants();
-        }
-
-        
+        }      
 
     }, [firebase, category])
 

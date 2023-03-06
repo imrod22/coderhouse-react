@@ -136,7 +136,7 @@ return(
     h={[56, 72, 96, "full"]}
     w="full"
     fit="cover"
-    src={require(`../../assets/images/vinitha-v-ev-yBYASLyI-unsplash.jpg`)}
+    src={require(`../../assets/images/homeflowersimage.jpg`)}
     alt=""
     loading="lazy"
   />

@@ -17,19 +17,29 @@ export const CartProvider = ({children}) => {
             setCart([...cart, plant]);
         }
         else {
-            cart.find(p => p.name === plant.name && p.type === plant.type).quantity++;
-            setCart(cart);
+            setCart(cart.map(p => {
+                if(p.id === plant.id && p.name === plant.name){
+                    p.quantity++;
+                }
+                return p;           
+            })) 
         }
     }
 
     const removePlantInCart = (plant) => {
 
-        setCart(cart.map(p => {
-            if(p.id === plant.id && p.name === plant.name){
-                p.quantity--;
-            }
-            return p;           
-        }))            
+        if(plant.quantity === 1)
+        {
+            removeAllPlantInCart(plant);
+        }
+        else {
+            setCart(cart.map(p => {
+                if(p.id === plant.id && p.name === plant.name){
+                    p.quantity--;
+                }
+                return p;           
+            }));
+        }                   
     }
 
     const removeAllPlantInCart = (plant) => {
@@ -46,8 +56,6 @@ export const CartProvider = ({children}) => {
     }
 
     const totalExpend = () => {
-        console.log(cart.reduce((tot, current) => tot + (current.price * current.quantity), 0));
-
         return cart.reduce((tot, current) => tot + (current.price * current.quantity), 0);
     }
 
