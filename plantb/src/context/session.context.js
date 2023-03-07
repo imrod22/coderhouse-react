@@ -23,6 +23,8 @@ export const SessionProvider = ({children}) => {
     const [user, setUser] = useState(userActive);
     const { emptyCart } = useCartContext();
 
+
+
     const login = (values) => {
         const userReference = collection(firebase, 'users');
         const queryUsers = query(userReference, where('email', '==', values.email), where('password', '==', values.password));
@@ -33,7 +35,7 @@ export const SessionProvider = ({children}) => {
                     setUser({
                         id: users.docs[0].id,
                         email: data.email,
-                        name: data.name,
+                        name: data.firstName,
                         active: true,
                         error: null
                     })
@@ -43,7 +45,7 @@ export const SessionProvider = ({children}) => {
                         email: null,
                         name: null,
                         active: false,
-                        error: 'User Invalid!'
+                        error: 'User Or Password Invalid!'
                     })
                 }
                 })

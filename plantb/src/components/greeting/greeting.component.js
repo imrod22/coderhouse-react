@@ -82,43 +82,7 @@ return(
           display={{ sm: "flex" }}
           justifyContent={{ sm: "center", lg: "start" }}
           fontWeight="extrabold"
-          fontFamily="fantasy"
         >
-          <Box rounded="full" shadow="md">
-            <chakra.a
-              w="full"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              rounded="full"
-              color="white"
-              bg="#1c8e3c"
-              px={{ base: 8, md: 10 }}
-              py={{ base: 3, md: 4 }}
-              cursor="pointer"
-            >
-              sign up
-            </chakra.a>
-          </Box>
-          <Box mt={[3, 0]} ml={[null, 3]}>
-            <chakra.a
-              w="full"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              px={{ base: 8, md: 10 }}
-              py={{ base: 3, md: 4 }}
-              border="solid 1px transparent"
-              fontSize={{ base: "md", md: "lg" }}
-              rounded="md"
-              color="brand.700"
-              bg="brand.100"
-              _hover={{ bg: "brand.200" }}
-              cursor="pointer"
-            >
-              sign in
-            </chakra.a>
-          </Box>
         </Box>
       </Box>
     </Box>

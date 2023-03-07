@@ -10,12 +10,12 @@ const Checkout = () => {
     useEffect(() => {
         getDoc(userReference)
             .then((res) => {
-                const { name, lastname, address, zipcode } = res.data();
+                const { firstname, lastname } = res.data();
                 setUserData({
-                    name: name,
+                    name: firstname,
                     lastname: lastname,
-                    address: address,
-                    zipcode: Number(zipcode)
+                    //address: address,
+                    //zipcode: Number(zipcode)
                 });
             })
     }, [])
