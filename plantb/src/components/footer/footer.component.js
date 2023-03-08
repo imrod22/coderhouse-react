@@ -18,6 +18,7 @@ import {
   p={50}
   alignItems="center"
   justifyContent="center"
+  mt={"2%"}
 >
   <Flex
     w="full"

@@ -17,12 +17,13 @@ export const CartProvider = ({children}) => {
             setCart([...cart, plant]);
         }
         else {
-            setCart(cart.map(p => {
+            
+                setCart(cart.map(p => {
                 if(p.id === plant.id && p.name === plant.name){
                     p.quantity++;
                 }
-                return p;           
-            })) 
+                     return p;           
+                }));         
         }
     }
 
@@ -33,12 +34,12 @@ export const CartProvider = ({children}) => {
             removeAllPlantInCart(plant);
         }
         else {
-            setCart(cart.map(p => {
-                if(p.id === plant.id && p.name === plant.name){
-                    p.quantity--;
-                }
-                return p;           
-            }));
+                setCart(cart.map(p => {
+                    if(p.id === plant.id && p.name === plant.name){
+                        p.quantity--;
+                    }
+                    return p;           
+                }));           
         }                   
     }
 
@@ -49,6 +50,14 @@ export const CartProvider = ({children}) => {
 
     const existsProduct = (plant) => {
         return (cart.some(p => p.name === plant.name && p.type === plant.type));
+    }
+
+    const plantQuantity = (plant) => {
+        const plantSelected = cart.find(p => plant.id);
+        if(plantSelected)
+            return plantSelected.quantity;
+        else
+            return 0;
     }
 
     const totalPlants = () => {
@@ -73,6 +82,7 @@ export const CartProvider = ({children}) => {
             removePlantInCart,
             removeAllPlantInCart,
             existsProduct,
+            plantQuantity,
             totalPlants,
             totalExpend,
             emptyCart,

@@ -10,6 +10,7 @@ import { ItemDetailContainer } from '../components/item/itemdetailcontainer.comp
 import Greeting from '../components/greeting/greeting.component';
 import Cart from '../components/cart/cart.component';
 import NonFound from '../pages/not-found/notfound';
+import Checkout from '../components/checkout/checkout.component'
 
 const UserRouter = () => {
     return (
@@ -22,6 +23,7 @@ const UserRouter = () => {
             <Route path="/about" element={<AboutUs/>} />
             <Route path="/cart" element={ <Cart/>} />
             <Route path="/signin" element={ <Navigate to="/" /> }/>
+            <Route path="/checkout" element={<Checkout/>} />
             <Route path="/error" element={<NonFound/>} />
             <Route path="*" element={ <Navigate to="/error"/> } />
         </Routes>  

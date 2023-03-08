@@ -12,9 +12,10 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import CartAddItem from '../cart/cartadditem.component';
+import CounterPlant from '../counter/counterplant.component';
 
 export const ItemDetail = ({ plant }) => {
-    const { name, image, description, family, price } = plant;
+    const { name, image, description, family, price, storage } = plant;
    
     return (
       
@@ -70,11 +71,12 @@ export const ItemDetail = ({ plant }) => {
                     </Text>
                   </VStack>
                 </Stack>
-                <CartAddItem plant={plant}></CartAddItem>
-
+                  <CartAddItem plant={plant}></CartAddItem> 
                   <Stack direction="row" alignItems="center" justifyContent={'center'}>
-                  <Text>2-3 business days delivery</Text>
-                </Stack>                
+                  <Text fontSize={'lg'}>
+                    stock: {storage}
+                    </Text>
+                  </Stack>                
                 
               </Stack>
             </SimpleGrid>

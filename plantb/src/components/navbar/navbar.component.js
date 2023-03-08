@@ -1,10 +1,11 @@
-import { Flex, Icon, Spacer, Button, Text, Box } from '@chakra-ui/react';
+import { Flex, Icon, Spacer, Text, Menu, MenuButton, Link, MenuList } from '@chakra-ui/react';
 import MenuLinks from './menulink.component';
 import { ReactComponent as Logo } from '../../assets/plantb-logo.svg';
 import CartWidget from '../cart/cartwidget.component';
 import { Link as RouteLink } from "react-router-dom";
 import { useSessionContext } from '../../context/session.context';
 import { useNavigate } from "react-router-dom";
+import MenuItem from './menuitem.component';
 
 const NavBar = () => {
     const { logout, user } = useSessionContext();
@@ -34,21 +35,26 @@ const NavBar = () => {
         <Spacer />
         {
           user.active &&
-          <Box  alignItems= "center"
-                alignContent= "space-between"
-          display= "flex"
-          justifyContent= "space-evenly"
-          flexWrap= "wrap"
-          flexDirection="row" >
-            <Text _hover={{fontWeight: 1000}} display="block" mr={4}>
-              Hello {user.name}
-            </Text>
-            <Button onClick={handlerExit} mr={4}>              
-            Exit
-            </Button>
-          </Box>
-          
-          }   
+          <Menu autoSelect={false} isLazy >
+            <>
+              <MenuButton _hover={{fontWeight: 1000}}>
+                <Flex alignItems="center" >
+                  <Text>Hello {user.name}</Text>
+                </Flex>
+              </MenuButton>
+              <MenuList
+                zIndex={5}
+                border="none"
+              >
+                <MenuItem pagepath="/orders" section="My Orders"></MenuItem>
+                <Link _hover={{fontWeight: 1000}} onClick={handlerExit}>
+                    <Text>Exit</Text>
+                </Link>
+                
+              </MenuList>
+            </>
+        </Menu>
+      }          
         <CartWidget/>   
       </Flex>     
     );

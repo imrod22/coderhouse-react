@@ -9,7 +9,7 @@ import {
 
 const CartAddItem = ({disabled = false, plant}) => {
 
-    const { existsProduct, addPlantToCart } = useCartContext();
+    const { addPlantToCart, plantQuantity } = useCartContext();
 
     const handlerAddPlant = () => {
       const {id, name, price, family, image, quantity, storage} = plant;
@@ -23,19 +23,14 @@ const CartAddItem = ({disabled = false, plant}) => {
           storage
       }
 
-      if(plantSelected.storage === 0)
+      if(plantSelected.storage === 0 || plantQuantity(plantSelected) >= plantSelected.storage)
       {
-        toast.error('Plant Not Available')
+        toast.error('No More Stock Available!')
       }
-      else {
-        if(!existsProduct(plantSelected))
-        {
+      else
+      {
           addPlantToCart(plantSelected);
           toast.success('Add Plant to Cart!');
-        }
-        else{
-          toast('Already Added')
-        }
       }
     }
     

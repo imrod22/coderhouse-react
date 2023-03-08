@@ -12,7 +12,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const  CounterPlant = ({plant})  => {  
 
-  const { addPlantToCart, removePlantInCart } = useCartContext();
+  const { addPlantToCart, removePlantInCart, plantQuantity } = useCartContext();
 
   const handlerAddMoreQuantity = () => {
     const {id, name, price, family, image, quantity, storage, type} = plant;
@@ -26,9 +26,16 @@ const  CounterPlant = ({plant})  => {
           quantity,
           storage
       }
+      if(plantSelected.storage === 0 || plantQuantity(plantSelected) >= plantSelected.storage)
+      {
+        toast.error('No More Stock Available!'); 
+      }
+      else
+      {
+        addPlantToCart(plantSelected);
+        toast.success('Add Plant to Cart!');
+      }
 
-    addPlantToCart(plantSelected);
-    toast.success(plantSelected.name + ' - Added One More to List!');
   };
 
   const handlerRemoveQuantity = () => {
@@ -57,10 +64,8 @@ const  CounterPlant = ({plant})  => {
             <NumberDecrementStepper onClick={handlerRemoveQuantity}/>
           </NumberInputStepper>
         </NumberInput>
-        <Toaster/>
-        
-      </Flex>
-      
+        <Toaster/>        
+      </Flex>      
     )
   }
 
