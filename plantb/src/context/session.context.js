@@ -36,6 +36,7 @@ export const SessionProvider = ({children}) => {
                         id: users.docs[0].id,
                         email: data.email,
                         name: data.firstName,
+                        lastname: data.lastName,
                         active: true,
                         error: null
                     })

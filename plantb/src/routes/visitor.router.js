@@ -3,12 +3,10 @@ import {
     Route,
     Navigate
   } from "react-router-dom";
-
   
 import Greeting from '../components/greeting/greeting.component';
 import { ItemListContainer } from '../components/item/itemlistcontainer.component';
 import SignIn from '../session/signin';
-
 import AboutUs from '../pages/aboutus/aboutus';
 import SignUp from '../session/signup';
 

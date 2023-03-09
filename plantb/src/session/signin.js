@@ -17,8 +17,7 @@ const SignIn = () => {
     const { login, user } = useSessionContext();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate();
-    
+    const navigate = useNavigate();    
 
     const handleSubmit = async event => {
       event.preventDefault();
@@ -27,7 +26,7 @@ const SignIn = () => {
 
     const handlerGoToSignUp = () => {
       navigate('/signup');
-  }
+    }
 
     return (
         <Flex width="full" align="center" justifyContent="center" m="2%">

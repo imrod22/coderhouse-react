@@ -4,8 +4,8 @@ import {
     useColorModeValue
   } from '@chakra-ui/react';
 
-  import { useCartContext } from '../../context/cart.context';
-  import toast, { Toaster } from 'react-hot-toast';
+import { useCartContext } from '../../context/cart.context';
+import toast, { Toaster } from 'react-hot-toast';
 
 const CartAddItem = ({disabled = false, plant}) => {
 
@@ -24,9 +24,7 @@ const CartAddItem = ({disabled = false, plant}) => {
       }
 
       if(plantSelected.storage === 0 || plantQuantity(plantSelected) >= plantSelected.storage)
-      {
         toast.error('No More Stock Available!')
-      }
       else
       {
           addPlantToCart(plantSelected);
@@ -53,7 +51,7 @@ const CartAddItem = ({disabled = false, plant}) => {
                   onClick={handlerAddPlant} disabled={disabled}>
                   Add to cart
                 </Button>
-  <Toaster/>
+      <Toaster/>
      </Flex>
     )
 }

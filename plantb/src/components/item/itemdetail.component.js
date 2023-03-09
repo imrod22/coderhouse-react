@@ -12,7 +12,6 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import CartAddItem from '../cart/cartadditem.component';
-import CounterPlant from '../counter/counterplant.component';
 
 export const ItemDetail = ({ plant }) => {
     const { name, image, description, family, price, storage } = plant;

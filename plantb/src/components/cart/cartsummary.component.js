@@ -8,15 +8,20 @@ import {
 
   import { useCartContext } from "../../context/cart.context";
   import { useNavigate } from 'react-router-dom';
+  import toast, { Toaster } from 'react-hot-toast';
 
  
 
 const CartSummary = () => {
-  const { totalExpend } = useCartContext();    
+  const { totalExpend, totalPlants } = useCartContext();    
   const navigate = useNavigate();
 
 const handlerCheckout = () =>{
-  navigate('/checkout');
+  if(totalPlants() > 0)
+    navigate('/checkout');
+  else
+    toast.error('Your cart its empty!')
+
 }
 
     return (
@@ -25,13 +30,14 @@ const handlerCheckout = () =>{
         <Stack spacing="6">          
           <Flex justify="space-between">
             <Text fontSize="lg" fontWeight="semibold">
-              Cost Total :  {Math.ceil(totalExpend())}
+              Cost Total :  {Number((totalExpend()).toFixed(2))}
             </Text>
           </Flex>
         </Stack>
         <Button colorScheme="green" size="lg" fontSize="md" onClick={handlerCheckout}>
           Checkout
         </Button>
+        <Toaster/>
       </Stack>
     )
   }

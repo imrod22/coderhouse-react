@@ -1,7 +1,8 @@
-import { addDoc, collection, doc, documentId, getDoc, getDocs, query, where, writeBatch } from "firebase/firestore/lite";
-import { useFirebase } from "../../context/firebase.context";
+import { useFirebase } from '../../context/firebase.context';
 import { useCartContext } from '../../context/cart.context';
-import toast, { Toaster } from 'react-hot-toast';
+import { useSessionContext } from '../../context/session.context';
+import { useState, useContext, useEffect } from 'react';
+import { addDoc, collection, doc, documentId, getDoc, getDocs, query, where, writeBatch } from 'firebase/firestore/lite';
 import {
     Flex,
     Box,
@@ -11,74 +12,104 @@ import {
     Input,
     Button
     } from '@chakra-ui/react';
-
-    import { useState, useContext, useEffect } from 'react';
-    
+import toast, { Toaster } from 'react-hot-toast';
+import Joi from 'joi-browser';
+import { useNavigate } from 'react-router-dom'; 
 
 const Checkout = () => {
-    const [ordenNumber, setOrdenNumber] = useState();
-    const firebase = useFirebase();
-    const [firstName, setfirstName] = useState();
-    const [lastName, setlastName] = useState();
-    const [address, setAdress] = useState();
-    const [phone, setPhone] = useState();
-    const [email, setEmail] = useState();
-    const [otheremail, setOtherEmail] = useState();
+  const navigate = useNavigate();  
+  const firebase = useFirebase();
 
-    // useEffect(() => {
-    //     getDoc(userReference)
-    //         .then((res) => {
-    //             const { firstname, lastname } = res.data();
-    //             setUserData({
-    //                 name: firstname,
-    //                 lastname: lastname,
-    //                 address: address,
-    //                 phone: phone,
-    //                 email: email
-    //             });
-    //         })
-    // }, [])
-    
-    // const createOrder = async() => {
+  const { user } = useSessionContext();
 
-    //     if(totalPlants() === 0)
-    //     {
-    //         toast.error('Purchase cant be processed!');
-    //         return
-    //     }
-        
-    //     const firebasePlants = collection(firebase, 'plants');
-    //     const firebaseOrders = collection(firebase, 'orders');
-    //     const batch = writeBatch(firebase);
+  const [errors, setErrors] = useState({});
+  
+  const [contact, setContact] = useState({
+  firstName:user.name,
+  lastName:user.lastname,
+  address:'',
+  phone:'',
+  email:'',
+  anotheremail:''
+  });
 
-    //     const order = {
-    //         order: cart,
-    //         date: Date.now(),
-    //         status: 'Created',
-    //         total: totalExpend()
-    //     }
+  const schema = {
+    firstName: Joi.string().min(5).max(20).required(),
+    lastName: Joi.string().min(5).max(20).required(),
+    address: Joi.string().min(8).max(20).required(), 
+    phone: Joi.string().min(8).max(20).required(),
+       
+    email: Joi.string().email().required(),
+    anotheremail: Joi.string().email().required(),
+  };
 
-    //     const queryfirebasePlants = await getDocs(firebasePlants, where( documentId(), 'IN', cart.map(c => c.id) ));
-    //     const currentPlants = await getDocs(queryfirebasePlants);
+  const handlerValidateData = (event) => {
+    event.preventDefault();
 
-    //     currentPlants.docs.forEach(plant => {
-    //         const cartPlant = cart.find(cp => cp.id === plant.id);
-    //         batch.update(plant.ref,{
-    //             storage: (plant.data().storage - cartPlant.quantity)
-    //         })
-    //     });
+    setErrors({});
+    const result = Joi.validate(contact, 
+        schema, { abortEarly: false });
+    const { error } = result;
+    const errorData = {};
 
-    //     batch.commit()
-    //             .then(() => {
-    //                 addDoc(firebaseOrders, order)
-    //                     .then((doc) => {
-    //                         setOrdenNumber(doc.id);
-    //                         toast.success('Transaction purchased succesfully with order number: '+ ordenNumber);
-    //                         emptyCart();
-    //                     }).catch((error) => console.error(error))
-    //             })
+    if (!error) {
+      if(user.email !== contact.email)
+      {
+        toast.error("To confirm the transaction enter account email.")
+        return
+      }
+      else {
+        if(contact.email !== contact.anotheremail){
+          toast.error("Emails are not the same.")
+          return 
+      }
+      else {
+        toast.success("Calculating shipment...")
+      }
+    }
+    } else {
+      
+      for (let item of error.details) {
+        const name = item.path[0];
+        const message = item.message;
+        errorData[name] = message;
+      }
+      setErrors(errorData);
+      return errorData;
+    }
+  };
 
-    // }
+  const validateInfoContact = (event) => {
+    const { name, value } = event.target;
+
+    const obj = { [name]: value };
+    const subSchema = { [name]: schema[name] };
+    const result = Joi.validate(subSchema, obj);
+    const { error } = result;
+    return error ? error.details[0].message : null;
+  };
+
+  const handlerSave = (event) => {
+    const { name, value } = event.target;
+    let errorData = { ...errors };
+    const errorMessage = validateInfoContact(event);    
+
+    if (errorMessage) {
+      errorData[name] = errorMessage;
+    } else {
+      delete errorData[name];
+    }
+    let contactData = { ...contact };
+
+    contactData[name] = value;
+    setContact(contactData);
+    setErrors(errorData);
+  }
+
+
+  const handlerReturnCart = () => {
+      navigate('/cart');
+  }
 
     return(
         <Flex width="full" align="center" justifyContent="center" m="2%">
@@ -91,44 +122,74 @@ const Checkout = () => {
    <form >
    <FormControl isRequired>
         <FormLabel>Receiver First Name</FormLabel>
-        <Input type="text" placeholder="John" size="lg"
-              onChange={event => setfirstName(event.currentTarget.value)}/>
+        <Input type="text" placeholder="John" size="lg" value={contact.firstName}
+        onChange={handlerSave}
+              /* onChange={event => setfirstName(event.currentTarget.value)} */ readOnly/>
+      {errors.firstName && (
+          <Box mt={"5%"} mb={"5%"} className="alert alert-danger">
+            {errors.firstName}
+          </Box>
+        )}
       </FormControl>
    <FormControl isRequired>
         <FormLabel>Receiver Last Name</FormLabel>
-        <Input type="text" placeholder="Doe" size="lg"
-              onChange={event => setlastName(event.currentTarget.value)}/>
+        <Input type="text" placeholder="Doe" size="lg" value={contact.lastName}
+          onChange={handlerSave} readOnly/>
+        <Box mt={"5%"} mb={"5%"} color="red" className="alert alert-danger">
+            {errors.lastName}
+          </Box>
       </FormControl>
       <FormControl isRequired>
         <FormLabel>Phone</FormLabel>
-        <Input type="number" placeholder="(555)555-555" size="lg"
-              onChange={event => setPhone(event.currentTarget.value)}/>
+        <Input type="text" name='phone' placeholder="55555555" size="lg" value={contact.phone}
+          onChange={handlerSave}
+              /* onChange={event => setPhone(event.currentTarget.value)} *//>
+          <Box mt={"5%"} mb={"5%"} color="red" className="alert alert-danger">
+            {errors.phone}
+          </Box>
       </FormControl>
       <FormControl isRequired>
-        <FormLabel>Adress</FormLabel>
-        <Input type="text" placeholder="home 123" size="lg"
-              onChange={event => setAdress(event.currentTarget.value)}/>
+        <FormLabel>Address</FormLabel>
+        <Input type="text" name='address' placeholder="home 123" size="lg" value={contact.address}
+        onChange={handlerSave}
+              /* onChange={event => setAdress(event.currentTarget.value)} *//>
+              <Box mt={"5%"} mb={"5%"} color="red" className="alert alert-danger">
+            {errors.address}
+          </Box>
       </FormControl>
       <FormControl isRequired>
         <FormLabel>Email</FormLabel>
-        <Input type="email" placeholder="mail@domain.com" size="lg"
-              onChange={event => setEmail(event.currentTarget.value)}/>
+        <Input  type="email" name='email' 
+                placeholder="mail@domain.com" 
+                size="lg" 
+                value={contact.email}
+                onChange={handlerSave}
+              /* onChange={event => setEmail(event.currentTarget.value)} *//>
+        <Box mt={"5%"} mb={"5%"} color="red" className="alert alert-danger">
+            {errors.email}
+          </Box>
       </FormControl>
+      
       
       <FormControl mt={6} isRequired>
         <FormLabel>Re-Enter Email</FormLabel>
-        <Input type="email" name='anotheremail' 
-        onChange={event => setOtherEmail(event.currentTarget.value)}/>
+        <Input type="email" name='anotheremail' value={contact.anotheremail}
+        onChange={handlerSave}
+        /* onChange={event => setOtherEmail(event.currentTarget.value)} *//>
+        <Box mt={"5%"} mb={"5%"} color="red" className="alert alert-danger">
+            {errors.anotheremail}
+          </Box>
       </FormControl>      
-      <Button type="submit" colorScheme="green" variant="outline" width="full" mt={4}>
+      <Button type="submit" onClick={handlerValidateData} colorScheme="green" variant="outline" width="full" mt={4}>
         Purchase
       </Button>
-      <Button colorScheme="green" variant="outline" width="full" mt={4}>
+      <Button onClick={handlerReturnCart} colorScheme="green" variant="outline" width="full" mt={4}>
         Return
       </Button>
     </form>
   </Box>
 </Box>
+<Toaster/>
 </Flex>
 
     )
