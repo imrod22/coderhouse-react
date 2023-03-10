@@ -1,8 +1,8 @@
-import { useFirebase } from '../../context/firebase.context';
+import { db } from '../../firebase/firebase.configuration';
 import { useCartContext } from '../../context/cart.context';
 import { useSessionContext } from '../../context/session.context';
-import { useState, useContext, useEffect } from 'react';
-import { addDoc, collection, doc, documentId, getDoc, getDocs, query, where, writeBatch } from 'firebase/firestore/lite';
+import { useState } from 'react';
+import { addDoc, collection } from 'firebase/firestore/lite';
 import {
     Flex,
     Box,
@@ -13,16 +13,17 @@ import {
     Button
     } from '@chakra-ui/react';
 import toast, { Toaster } from 'react-hot-toast';
-import Joi from 'joi-browser';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import SuccessfulPurchase from '../successfulpurchase/successfulpurchase.component';
 
 const Checkout = () => {
   const navigate = useNavigate();  
-  const firebase = useFirebase();
-
+  const Joi = require('joi');
   const { user } = useSessionContext();
-
+  const { cart, emptyCart, totalExpend, totalPlants } = useCartContext();
   const [errors, setErrors] = useState({});
+  const [purchase, setPurchase] = useState(false);
+  const [orderNumber, setOrderNumber] = useState();
   
   const [contact, setContact] = useState({
   firstName:user.name,
@@ -33,42 +34,68 @@ const Checkout = () => {
   anotheremail:''
   });
 
-  const schema = {
-    firstName: Joi.string().min(5).max(20).required(),
-    lastName: Joi.string().min(5).max(20).required(),
+  const schema = Joi.object({
+    firstName: Joi.string().min(5).max(20),
+    lastName: Joi.string().min(5).max(20),
     address: Joi.string().min(8).max(20).required(), 
-    phone: Joi.string().min(8).max(20).required(),
-       
-    email: Joi.string().email().required(),
-    anotheremail: Joi.string().email().required(),
-  };
+    phone: Joi.string().required(),       
+    email: Joi.string().email({ tlds: { allow: false } }).required(),
+    anotheremail: Joi.string().email({ tlds: { allow: false } }).required(),
+  });
 
-  const handlerValidateData = (event) => {
+  const handlerValidateData = async (event) => {
     event.preventDefault();
+    if(totalPlants() === 0){
+      toast.error('Must select at least a Plant before buy!');
+      navigate('/');
+    }
+
+    setPurchase(true);
+    
 
     setErrors({});
-    const result = Joi.validate(contact, 
-        schema, { abortEarly: false });
+    const result = schema.validate(contact, { abortEarly: false });
     const { error } = result;
     const errorData = {};
 
     if (!error) {
       if(user.email !== contact.email)
       {
+        setPurchase(false);
         toast.error("To confirm the transaction enter account email.")
         return
       }
       else {
+        setPurchase(false);
         if(contact.email !== contact.anotheremail){
           toast.error("Emails are not the same.")
           return 
       }
       else {
-        toast.success("Calculating shipment...")
+        const currentOrden = {
+          user: {
+              id: user.id,
+              email: user.email,
+              address: contact.address,
+              phone:  contact.phone
+          },
+          order: cart,
+          date: new Date(Date.now()).toLocaleString(),
+          status: 'Generated',
+          total: totalExpend()
+      };
+
+      await addDoc(collection(db, 'orders'), currentOrden).then( (doc) =>
+        {
+          console.log(doc.id);
+          setOrderNumber(doc.id);          
+          emptyCart();
+        });
+      
       }
     }
     } else {
-      
+      setPurchase(false);
       for (let item of error.details) {
         const name = item.path[0];
         const message = item.message;
@@ -79,25 +106,21 @@ const Checkout = () => {
     }
   };
 
-  const validateInfoContact = (event) => {
-    const { name, value } = event.target;
-
-    const obj = { [name]: value };
-    const subSchema = { [name]: schema[name] };
-    const result = Joi.validate(subSchema, obj);
-    const { error } = result;
-    return error ? error.details[0].message : null;
-  };
+  if(orderNumber){
+    return(
+      <SuccessfulPurchase orderNumber={orderNumber} />
+    )
+  }
 
   const handlerSave = (event) => {
     const { name, value } = event.target;
     let errorData = { ...errors };
-    const errorMessage = validateInfoContact(event);    
+    const errorMessage = validateInfoContact(event);
 
     if (errorMessage) {
       errorData[name] = errorMessage;
     } else {
-      delete errorData[name];
+      errorData[name] = null;
     }
     let contactData = { ...contact };
 
@@ -105,6 +128,25 @@ const Checkout = () => {
     setContact(contactData);
     setErrors(errorData);
   }
+
+  const joiSubSchema = (base, field) => {
+    const rule = base.extract(field);
+    return Joi.object(
+      { [field]: rule })
+  }
+
+
+  const validateInfoContact = (event) => {
+    const { name, value } = event.target;
+    const obj = { [name]: value };
+
+    const subScheme = joiSubSchema(schema, name);
+
+    const result = subScheme.validate(obj, {allowUnknown: true});
+
+    const { error } = result;
+    return error ? error.details[0].message : null;
+  };
 
 
   const handlerReturnCart = () => {
@@ -141,9 +183,8 @@ const Checkout = () => {
       </FormControl>
       <FormControl isRequired>
         <FormLabel>Phone</FormLabel>
-        <Input type="text" name='phone' placeholder="55555555" size="lg" value={contact.phone}
-          onChange={handlerSave}
-              /* onChange={event => setPhone(event.currentTarget.value)} *//>
+        <Input type="number" name='phone' placeholder="55555555" size="lg" value={contact.phone}
+          onChange={handlerSave}/>
           <Box mt={"5%"} mb={"5%"} color="red" className="alert alert-danger">
             {errors.phone}
           </Box>
@@ -151,8 +192,7 @@ const Checkout = () => {
       <FormControl isRequired>
         <FormLabel>Address</FormLabel>
         <Input type="text" name='address' placeholder="home 123" size="lg" value={contact.address}
-        onChange={handlerSave}
-              /* onChange={event => setAdress(event.currentTarget.value)} *//>
+        onChange={handlerSave}/>
               <Box mt={"5%"} mb={"5%"} color="red" className="alert alert-danger">
             {errors.address}
           </Box>
@@ -163,8 +203,7 @@ const Checkout = () => {
                 placeholder="mail@domain.com" 
                 size="lg" 
                 value={contact.email}
-                onChange={handlerSave}
-              /* onChange={event => setEmail(event.currentTarget.value)} *//>
+                onChange={handlerSave}/>
         <Box mt={"5%"} mb={"5%"} color="red" className="alert alert-danger">
             {errors.email}
           </Box>
@@ -180,12 +219,20 @@ const Checkout = () => {
             {errors.anotheremail}
           </Box>
       </FormControl>      
-      <Button type="submit" onClick={handlerValidateData} colorScheme="green" variant="outline" width="full" mt={4}>
-        Purchase
-      </Button>
-      <Button onClick={handlerReturnCart} colorScheme="green" variant="outline" width="full" mt={4}>
+      {
+        purchase ?
+        <Button disabled="true" colorScheme="green" variant="outline" width="full" mt={4}>
+             Calculating shipment...
+        </Button>        
+       :
+       <Button type="submit" onClick={handlerValidateData} colorScheme="green" variant="outline" width="full" mt={4}>
+          Purchase
+        </Button>
+      }
+        <Button onClick={handlerReturnCart} colorScheme="green" variant="outline" width="full" mt={4}>
         Return
       </Button>
+      
     </form>
   </Box>
 </Box>
