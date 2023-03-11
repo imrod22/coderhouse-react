@@ -1,17 +1,13 @@
-import { useState } from "react";
 import {
     Flex,
     Box,
     Heading,
     Button
     } from '@chakra-ui/react';
-import CopyToClipboard from "react-copy-to-clipboard";
-import * as IconFeather from 'feather-icons';
 import { useNavigate } from 'react-router-dom';
 
 const SuccessfulPurchase = ({orderNumber}) => {
-    const navigate = useNavigate();  
-    const [copy, setCopy] = useState(false);
+    const navigate = useNavigate();
 
     const handlerGoCatalog = () => {
         navigate('/plants')
@@ -23,14 +19,6 @@ const SuccessfulPurchase = ({orderNumber}) => {
               <Box textAlign="center">
                 <Heading>Thanks! Our Order Number is <strong className="me-2">{orderNumber}</strong></Heading>
               </Box>
-              {/* {
-                copy ?
-                <Button variant="success">Copied </Button> :
-
-                <CopyToClipboard text={orderNumber} onCopy={() => setCopy(true)}>
-                    <Button variant="secondary" title="copy to clipboard"><IconFeather.Clipboard/></Button>
-                </CopyToClipboard>
-              } */}
             <Button onClick={handlerGoCatalog} colorScheme="green"  width="full" variant="outline" mt={4}>
                 Go to Catalog
             </Button> 
