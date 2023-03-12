@@ -16,6 +16,7 @@ const  CounterPlant = ({plant})  => {
 
   const handlerAddMoreQuantity = () => {
     const {id, name, price, family, image, quantity, storage, type} = plant;
+
       const plantSelected = {
           id,
           image,
@@ -26,6 +27,7 @@ const  CounterPlant = ({plant})  => {
           quantity,
           storage
       }
+
       if(plantSelected.storage === 0 || plantQuantity(plantSelected) >= plantSelected.storage)
       {
         toast.error('No More Stock Available!');

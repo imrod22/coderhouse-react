@@ -53,9 +53,9 @@ export const CartProvider = ({children}) => {
     }
 
     const plantQuantity = (plant) => {
-        const plantSelected = cart.find(p => plant.id);
-        if(plantSelected)
-            return plantSelected.quantity;
+        const currentPlant = cart.find(p => p.id === plant.id);
+        if(currentPlant)
+            return currentPlant.quantity;
         else
             return 0;
     }
