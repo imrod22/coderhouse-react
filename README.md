@@ -30,7 +30,7 @@ Las plantas tienen muchos beneficios para la salud ya que purifican el aire, te 
 | Library | Description |
 | :---:  | :---: |
 |Chackra UI | Libreria de componentes modular y reusable principalmente utilizada para definir el estilo general del sitio |
-|Firebase Lite | Libreria que permite la manupulacion de documentos alojados en Firestore                                  |
+|Firestore Lite | Libreria que permite la manupulacion de documentos alojados en Firestore                                 |
 |Joi        | Libreria que permite la validacion de los valores recibidos como input desde formularios                     |
 
 ## Run Locally
