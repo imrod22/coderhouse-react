@@ -37,7 +37,10 @@ Start the server
 ```bash
   npm run start
 ```
+## Demo
 
+![](https://github.com/coderhouse-react-plant-b-project/plantb/src/assets
+/PlantBDemo.gif)
 
 ## Author
 
