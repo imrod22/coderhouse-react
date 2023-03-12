@@ -1,12 +1,17 @@
-# coderhouse-pre-entrega-2
+## requester: coderhouse
+## group: 39540
 
-## URL : https://sunny-elf-150f01.netlify.app/
+## Project Name: Plant B Grow Shop
+## URL : https://plantbgrowshop.netlify.app/
+
+## Description 
+Las plantas tienen muchos beneficios para la salud ya que purifican el aire, te conectan con la naturaleza y potencian tu creatividad. En nuestro sitio encontrarás una gran variedad de Plantas de Interior, Exterior y Árboles Frutales.
 
 ## Tech Stack
 
 **Client:** React, Chakra UI
 
-**Server:** -
+**Server:** Firebase
 ## Run Locally
 
 Clone the project
