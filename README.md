@@ -39,7 +39,7 @@ Start the server
 ```
 ## Demo
 
-![](https://github.com/coderhouse-react-plant-b-project/plantb/src/assets/PlantBDemo.gif)
+![](plantb/PlantBDemo.gif)
 
 ## Author
 
