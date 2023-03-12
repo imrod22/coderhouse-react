@@ -8,7 +8,7 @@ import {
   } from '@chakra-ui/react';
 
 import { useCartContext } from '../../context/cart.context';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 const  CounterPlant = ({plant})  => {  
 
@@ -28,7 +28,7 @@ const  CounterPlant = ({plant})  => {
       }
       if(plantSelected.storage === 0 || plantQuantity(plantSelected) >= plantSelected.storage)
       {
-        toast.error('No More Stock Available!'); 
+        toast.error('No More Stock Available!');
       }
       else
       {
@@ -63,8 +63,7 @@ const  CounterPlant = ({plant})  => {
             <NumberIncrementStepper onClick={handlerAddMoreQuantity}/>
             <NumberDecrementStepper onClick={handlerRemoveQuantity}/>
           </NumberInputStepper>
-        </NumberInput>
-        <Toaster/>        
+        </NumberInput>     
       </Flex>      
     )
   }
