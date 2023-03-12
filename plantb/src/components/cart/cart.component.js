@@ -70,8 +70,7 @@ const Cart = () => {
 
       </Stack>      
       </Box>
- )
-    
+ )    
 }
 
 export default Cart;

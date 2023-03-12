@@ -2,12 +2,14 @@ import {
   Image,
   chakra,
   Box,
-  Icon,
+  Icon
 } from '@chakra-ui/react';
+
+import LastProducts from '../greeting/lastproducts.component'
 
 const Greeting = (props) => {
 return(
-
+<>
 <Box pos="relative" overflow="hidden" bg={"#8d858517"} mt={10}>
 <Box maxW="7xl" mx="auto">
   <Box
@@ -106,6 +108,9 @@ return(
   />
 </Box>
 </Box>
+<LastProducts></LastProducts>
+</>
+
 );
 
 };

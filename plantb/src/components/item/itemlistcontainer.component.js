@@ -56,34 +56,32 @@ export const ItemListContainer = () => {
                 getPlantsByType(category);
             }
         
-        else{
-            setCategoryPlant("All Categories");
-            getPlants();
-        }      
+            else{
+                setCategoryPlant("All Categories");
+                getPlants();
+            }         
 
     }, [firebase, category])
 
 
     return (
         <>
-            <Flex      
-      align="center"
-      minH="15vh"
-      px={10}
-    >
-        <Heading
-          as="h2"
-          size="md"
-          color="primary.800"
-          opacity="0.5"
-          fontWeight="normal"
-          border={"1px"}
-          borderColor={"grey"}
-          p={"2rem"}
-        >
-          {categoryplant}
-        </Heading>    
-    </Flex>
+            <Flex align="center"
+                  minH="15vh"
+                  px={10}>
+                <Heading
+                  as="h2"
+                  size="md"
+                  color="primary.800"
+                  opacity="0.5"
+                  fontWeight="normal"
+                  border={"1px"}
+                  borderColor={"grey"}
+                  p={"2rem"}
+                >
+                  {categoryplant}
+                </Heading>    
+            </Flex>
     <Divider />
             {               
                 plants.length > 0 

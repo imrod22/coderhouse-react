@@ -53,7 +53,7 @@ export const Item = ({ plant }) => {
       <Stack>
       <HStack>
         <Text fontSize="sm" color={useColorModeValue('gray.600', 'gray.400')}>
-        {stylingPlantType(type)}
+          {stylingPlantType(type)}
           </Text>
         </HStack>
         <Stack spacing="1">

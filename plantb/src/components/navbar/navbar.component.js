@@ -44,10 +44,16 @@ const NavBar = () => {
               </MenuButton>
               <MenuList
                 zIndex={5}
-                border="none"
+                display={"flex"}
+                alignItems= {"stretch"}
+                flexDirection= {"column"}
+                flexWrap= {"wrap"}
+                alignContent= {"space-between"}
+                bg="#bfd1ba" 
+                border={'1px solid'}
               >
-                <MenuItem pagepath="/orders" section="My Orders"></MenuItem>
-                <Link _hover={{fontWeight: 1000}} onClick={handlerExit}>
+                <MenuItem pagepath="/orders" setMargin='15%' section="Orders"></MenuItem>
+                <Link ml="5%"_hover={{fontWeight: 1000}} onClick={handlerExit}>
                     <Text>Exit</Text>
                 </Link>
                 

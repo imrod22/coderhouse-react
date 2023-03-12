@@ -46,7 +46,7 @@ export const ItemDetail = ({ plant }) => {
                     color={useColorModeValue('gray.900', 'gray.400')}
                     fontWeight={300}
                     fontSize={'2xl'}>
-                    {price}
+                    $ {price}
                   </Text>
                 </Box>
       

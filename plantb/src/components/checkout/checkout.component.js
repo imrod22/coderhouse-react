@@ -52,15 +52,12 @@ const Checkout = () => {
     const databasePlants = collection(db, 'plants');
     const queryPlants = query(databasePlants, where( documentId(), 'in', cart.map(c => c.id) ));       
     const currentPlants = await getDocs(queryPlants);  
-    console.log("🚀 ~ file: checkout.component.js:55 ~ notHaveStock ~ currentPlants:", currentPlants)
     
     currentPlants.docs.forEach( plant => {
       const currentPlant = cart.find(cp => cp.id === plant.id);
-      console.log("🚀 ~ file: checkout.component.js:59 ~ notHaveStock ~ currentPlant:", currentPlant)
 
       if(plant.data().storage < currentPlant.quantity)
         notStocks.push(currentPlant);
-        console.log("🚀 ~ file: checkout.component.js:63 ~ notHaveStock ~ notStocks:", notStocks)
     });
 
     setNotStock(notStocks);
@@ -74,9 +71,7 @@ const Checkout = () => {
     const currentPlants = await getDocs(queryPlants);
 
     currentPlants.docs.forEach( plant => {
-      console.log("🚀 ~ file: checkout.component.js:77 ~ updateStock ~ plant:", plant.data().storage)
       const currentPlant = cart.find(cp => cp.id === plant.id);
-      console.log("🚀 ~ file: checkout.component.js:78 ~ updateStock ~ currentPlant:", currentPlant.quantity)
       batch.update(plant.ref, {
         storage: (plant.data().storage - currentPlant.quantity)
       })
