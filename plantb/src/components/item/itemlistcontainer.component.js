@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { getPlantsByCategory, getAllPlants } from "../../data/plantinformation";
 import { ItemList } from "../item/itemlist.component";
 import {
     Flex,
@@ -8,50 +7,91 @@ import {
     Divider
   } from '@chakra-ui/react'
 import { useParams } from "react-router-dom";
+import { useFirebase } from "../../context/firebase.context";
+import { collection, getDocs, query, where } from "firebase/firestore/lite";
 
 export const ItemListContainer = () => {
+    const firebase = useFirebase();
     const [plants, setPlants] = useState([]);
-    const [categoryplant, setCategoryPlant] = useState("");
-    const {category} = useParams();
+    const [ categoryplant, setCategoryPlant ] = useState("");
+    const { category } = useParams();
 
     useEffect(() => {
-        if(category){
-            setCategoryPlant(category)
-            getPlantsByCategory(category)
-            .then((res) => {          
-                setPlants(res);
-            })
-        }
-        else{
-            setCategoryPlant("All Categories")
-            getAllPlants()
-                .then((res) => {
-                    setPlants(res)
-                })
-        }
-    }, [category])
+        
+            const currentPlants = collection(firebase, 'plants');           
+
+            const getPlants = async() => {
+                const q = query(
+                    currentPlants
+                );
+
+                const querySnapshot = await getDocs(q);
+
+                const docs = [];
+                querySnapshot.forEach((doc) => {
+                docs.push({ ...doc.data(), id: doc.id, quantity: 0 });
+              });
+
+              setPlants(docs);
+            };
+
+            const getPlantsByType = async(category) => {
+
+                const q = query(
+                    currentPlants,
+                    where("category", "==", category)
+                );
+
+                const docs = [];
+
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    docs.push({ ...doc.data(), id: doc.id });
+                  });   
+                  setPlants(docs);
+            };
+
+            if(category){
+
+            switch (category) {
+                    case 'indoor':
+                        setCategoryPlant('Indoor');
+                        break;
+                    case 'outdoor':
+                        setCategoryPlant('Outdoor');
+                        break;
+                    case 'fruittree':
+                        setCategoryPlant('Fruit Trees');
+                        break;    
+                
+                    default: setCategoryPlant('All Categories');
+                        break;
+
+                }
+                getPlantsByType(category);
+            }
+        
+            else{
+                setCategoryPlant("All Categories");
+                getPlants();
+            }         
+
+    }, [firebase, category])
 
 
     return (
         <>
-            <Flex      
-      align="center"
-      minH="15vh"
-      px={10}
-    >
-        <Heading
-          as="h2"
-          size="md"
-          color="primary.800"
-          opacity="0.5"
-          fontWeight="normal"
-          border={"1px"}
-          borderColor={"grey"}
-          p={"2rem"}
-        >
-          category - {categoryplant}
-        </Heading>    
-    </Flex>
+            <Flex align="center"
+                  minH="15vh"
+                  px={10}>
+                <Heading
+                  as="h1"
+                  fontWeight="normal"
+                  p={"2rem"}
+                >
+                  {categoryplant}
+                </Heading>    
+            </Flex>
     <Divider />
             {               
                 plants.length > 0 

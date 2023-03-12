@@ -1,31 +1,23 @@
+import StatContainer from "../../components/greeting/statcontainer.component";
+
 import {
-    Container,
-    Box
-  } from '@chakra-ui/react'
+  Container,
+  Heading,
+  Text,
+  Stack,
+} from '@chakra-ui/react';
 
 const AboutUs = () => {
     return (
-        <Container paddingTop="5%">
-        <Box className='m-5' as="h2"
-          size="md"
-          color="primary.800"
-          opacity="0.5"
-          fontWeight="normal"
-          border={"1px"}
-          borderColor={"grey"}
-          p={"2rem"}>
-            <h3>
-                Somos <strong className='text-primary'>Plant B grow shop</strong>, una tienda online, desde 2018. 
-                <br />
-            </h3>
-            <h4> 
-            Las plantas tienen muchos beneficios para la salud ya que purifican el aire, te conectan con la naturaleza e impulsan tu creatividad. En nuestra tienda encontrarás una amplia variedad de Plantas de Interior, Exterior y Arboles frutales.
-            Realizamos envios a cualquier parte del mundo y acesoramiento inmediato con expertos 24 horas al dia durante los 365 dias del año.
-            </h4>
-        </Box>
-    </Container>
-    
-    
+
+      <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'} mt="5%">
+        <Heading fontSize={'3xl'}>We believe that a world full of plants is a better world.</Heading>
+        <Text color={'gray.600'} fontSize={'xl'}>
+          The impact of CO2 is real: this gas is the product of industrial activity and emissions from cars. The excess of CO2 increases the retention of heat in the atmosphere, increasing the levels of global warming.
+          Together we can make a difference and help reduce CO2 levels in our cities, helping to avoid climate change that can destroy our planet. How can you contribute? Whether your home has just one plant or a jungle: more green will help in the fight to reduce the amounts of toxic gases.
+        </Text>
+        <StatContainer></StatContainer>
+      </Stack>   
     )}
 
 export default AboutUs;
