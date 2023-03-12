@@ -38,8 +38,8 @@ const Checkout = () => {
   });
 
   const schema = Joi.object({
-    firstName: Joi.string().min(5).max(20),
-    lastName: Joi.string().min(5).max(20),
+    firstName: Joi.string(),
+    lastName: Joi.string(),
     address: Joi.string().min(8).max(20).required(), 
     phone: Joi.string().required(),       
     email: Joi.string().email({ tlds: { allow: false } }).required(),
