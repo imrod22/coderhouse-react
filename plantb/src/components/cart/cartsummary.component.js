@@ -28,7 +28,7 @@ const handlerCheckout = () =>{
         <Stack spacing="6">          
           <Flex justify="space-between">
             <Text fontSize="lg" fontWeight="semibold">
-              Cost Total :  {Number((totalExpend()).toFixed(2))}
+              Cost Total : $ {Number((totalExpend()).toFixed(2))}
             </Text>
           </Flex>
         </Stack>

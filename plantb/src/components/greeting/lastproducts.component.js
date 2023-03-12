@@ -34,12 +34,12 @@ const LastProducts = () => {
         <SimpleGrid
         display= 'flex'
         columnGap={{ base: '4', md: '6' }}
-        rowGap={{ base: '8', md: '10' }}  justifyContent= 'center' flexDirection= 'row'
-         flexWrap= 'wrap'
+        rowGap={{ base: '8', md: '10' }}
+         flexWrap= 'nowrap'
          justifyItems={'center'}
          alignContent= 'flex-end'
          alignItems= 'flex-start'>
-        <Heading mb={'5%'} fontSize='2xl' fontWeight='extrabold'>
+        <Heading ml= {"5%"} mb={'5%'} mt={"5%"} fontSize='2xl' fontWeight='extrabold'>
                 Last Products in Stock
               </Heading>
             {

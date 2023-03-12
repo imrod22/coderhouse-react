@@ -35,13 +35,20 @@ const ShopOrder = () => {
     
         getDocs(ordersQuery).then(
             (orderDatabase) => {
-                const order = orderDatabase.docs.map((orderDocument) => {                   
+                let order = orderDatabase.docs.map((orderDocument) => {                   
 
                     return {
                         ...orderDocument.data(),
                         id: orderDocument.ref.id
                     }
                 })
+
+              order =  order.sort(function(a,b) {
+                  a = Date.parse(a.date);
+                  b = Date.parse(b.date);
+                  return a < b ? 1 : a > b ? -1 : 0;
+                })
+
                 setMyOrders(order);
             });
         },[user]);
@@ -174,7 +181,7 @@ const ShopOrder = () => {
                     <PlantOrderContainer key={item.id} {...item} />
                   ))}
                   </AccordionPanel>
-                  <Text display={"flex"} justifyContent={"space-evenly"}>Total Cost: {currentOrder.total}</Text>  
+                  <Text display={"flex"} justifyContent={"space-evenly"}>Total Cost: $ {currentOrder.total}</Text>  
                 </AccordionItem> 
                 
                 )}   

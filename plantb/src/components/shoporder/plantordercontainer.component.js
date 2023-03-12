@@ -10,7 +10,7 @@ const PlantOrderContainer = (item) => {
         <Flex direction={{ base: 'column', md: 'row' }} justify="space-between" align="center">
             <CartItemDetail plant={item}/>      
             <Flex width="full" justify="space-between" display={{ base: 'none', md: 'flex' }}>
-            Quantity: {item.quantity} - Cost : {item.quantity * item.price}
+            Quantity: {item.quantity} - Cost : $ {item.quantity * item.price}
             </Flex>
       </Flex> 
             )

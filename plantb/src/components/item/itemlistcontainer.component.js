@@ -52,7 +52,22 @@ export const ItemListContainer = () => {
             };
 
             if(category){
-                setCategoryPlant(category);
+
+            switch (category) {
+                    case 'indoor':
+                        setCategoryPlant('Indoor');
+                        break;
+                    case 'outdoor':
+                        setCategoryPlant('Outdoor');
+                        break;
+                    case 'fruittree':
+                        setCategoryPlant('Fruit Trees');
+                        break;    
+                
+                    default: setCategoryPlant('All Categories');
+                        break;
+
+                }
                 getPlantsByType(category);
             }
         
@@ -70,13 +85,8 @@ export const ItemListContainer = () => {
                   minH="15vh"
                   px={10}>
                 <Heading
-                  as="h2"
-                  size="md"
-                  color="primary.800"
-                  opacity="0.5"
+                  as="h1"
                   fontWeight="normal"
-                  border={"1px"}
-                  borderColor={"grey"}
                   p={"2rem"}
                 >
                   {categoryplant}
