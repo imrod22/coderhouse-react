@@ -23,7 +23,7 @@ export const ItemDetailContainer = () => {
 
     },[firebase, id]);
 
-    return (
+return (
         <>
         {
             plant ? <ItemDetail key={plant.id} plant={plant} /> : 
